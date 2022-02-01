@@ -3,8 +3,8 @@ import AntStackLogo from "../../media/antstack-logo.png";
 
 const introLeftCardImage = {
   margin: "0 auto",
-  height: "360px",
-  width: "360px",
+  height: "auto",
+  width: "70%",
 };
 
 const IntroLeft = () => {
@@ -12,6 +12,7 @@ const IntroLeft = () => {
     <>
       <img
         style={introLeftCardImage}
+        // height="250"
         src={AntStackLogo}
         alt="AntStack Technologies Pvt Ltd"
       />
