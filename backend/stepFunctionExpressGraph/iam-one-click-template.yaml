@@ -1,0 +1,31 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Step Function Express Graph Generator Role
+
+Parameters:
+  IAMRoleName:
+    Type: String
+    Default: antstack_stepfunction_readonly_test
+  
+Resources:
+  StepFunctionExpressGraphRole:
+    Type: AWS::IAM::Role
+    Properties: 
+      AssumeRolePolicyDocument: 
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: "arn:aws:iam::873102235883:root"
+            Action:
+              - 'sts:AssumeRole'
+
+      Description: This role will be used by the stepfunction graph generator to assume and get access
+      ManagedPolicyArns: 
+        - arn:aws:iam::aws:policy/CloudWatchReadOnlyAccess
+        - arn:aws:iam::aws:policy/AWSStepFunctionsReadOnlyAccess
+      Path: /
+      RoleName: 
+        Ref: IAMRoleName
+
+

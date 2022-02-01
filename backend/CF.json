@@ -1,0 +1,113 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "This template creates a role which only Lumigo can use.",
+    "Outputs": {
+        "RoleARN": {
+            "Description": "The ARN of the role that can be assumed by Lumigo's account.",
+            "Value": {
+                "Fn::GetAtt": [
+                    "LumigoIntegrationRole",
+                    "Arn"
+                ]
+            }
+        }
+    },
+    "Resources": {
+        "LumigoIntegrationRole": {
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Statement": [
+                        {
+                            "Action": "sts:AssumeRole",
+                            "Effect": "Allow",
+                            "Principal": {
+                                "AWS": "599735196807"
+                            },
+                            "Sid": ""
+                        },
+                        {
+                            "Action": "sts:AssumeRole",
+                            "Effect": "Allow",
+                            "Principal": {
+                                "AWS": "114300393969"
+                            },
+                            "Sid": ""
+                        }
+                    ],
+                    "Version": "2012-10-17"
+                },
+                "ManagedPolicyArns": [
+                    "arn:aws:iam::aws:policy/ReadOnlyAccess"
+                ],
+                "Path": "/"
+            },
+            "Type": "AWS::IAM::Role"
+        },
+        "LumigoIntegrationPolicies": {
+            "Type": "AWS::IAM::Policy",
+            "Properties": {
+                "PolicyName": "LumigoIntegration",
+                "PolicyDocument": {
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Action": [
+                                "lambda:UpdateFunctionConfiguration"
+                            ],
+                            "Resource": "arn:aws:lambda:*:*:function:*"
+                        },
+                        {
+                            "Effect": "Allow",
+                            "Action": [
+                                "logs:PutSubscriptionFilter",
+                                "logs:DeleteSubscriptionFilter",
+                                "logs:DescribeSubscriptionFilters",
+                                "cloudwatch:PutMetricAlarm",
+                                "cloudwatch:DeleteAlarm"
+                            ],
+                            "Resource": "*"
+                        }
+
+                    ]
+                },
+                "Roles": [
+                    {
+                        "Ref": "LumigoIntegrationRole"
+                    }
+                ]
+            }
+        },
+        "LumigoReporter": {
+            "Type": "AWS::CloudFormation::CustomResource",
+            "Properties": {
+                "ServiceToken": {
+                    "Fn::Join": [
+                        ":",
+                        [
+                            "arn:aws:sns",
+                            {
+                                Ref: "AWS::Region"
+                            },
+                            "114300393969:prod_sns-edge-stfl_incoming-topic"
+                        ]
+                    ]
+                },
+                "RoleArn": {
+                    "Fn::GetAtt": [
+                        "LumigoIntegrationRole",
+                        "Arn"
+                    ]
+                },
+                "ExternalId": {
+                    Ref: "ExternalId"
+                }
+            }
+        }
+    },
+    "Parameters": {
+        "ExternalId": {
+            "Description": "External ID for securing the role - Do not change",
+            "Type": "String"
+        }
+    }
+}

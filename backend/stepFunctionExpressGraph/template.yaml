@@ -1,0 +1,56 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: stepFunctionExpressGraph
+  
+Resources:
+  s3BucketForHosting:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      AccessControl: PublicRead
+      BucketName: stp-fn-express-graph-gen
+      MetricsConfigurations:
+        - Id: EntireBucket
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: error.html
+  
+  getStepFunctionData:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: getStepFunctionData/
+      Handler: app.lambdaHandler
+      Runtime: nodejs14.x
+      Policies:
+        - AWSLambdaExecute
+        - Version: '2012-10-17' 
+          Statement:
+            - Effect: Allow
+              Action:
+                - sts:AssumeRole
+                - states:ListStateMachines
+                - states:DescribeStateMachine
+              Resource: '*'
+      Events:
+        HelloWorld:
+          Type: Api 
+          Properties:
+            Path: /getStepFunctionData
+            Method: get
+
+Outputs:
+  getStepFunctionData:
+    Description: "Lambda ARN used to get Step Function Data"
+    Value: !GetAtt getStepFunctionData.Arn
+  WebsiteURL:
+    Value: !GetAtt
+      - s3BucketForHosting
+      - WebsiteURL
+    Description: URL for website hosted on S3
+  S3BucketSecureURL:
+    Value: !Join
+      - ''
+      - - 'https://'
+        - !GetAtt
+          - s3BucketForHosting
+          - DomainName
+    Description: Name of S3 bucket to hold website content
