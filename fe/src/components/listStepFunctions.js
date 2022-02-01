@@ -6,24 +6,35 @@ import ProcessStepFunction from "./processStepFunction";
 const ListStepFunctions = (props) => {
   const [display, setDisplay] = useState(false);
   const [stpFn, setStpFn] = useState();
-  const [defaultKey, setDefaultKey] = useState("0");
+  const [defaultKey, setDefaultKey] = useState();
 
   const menuClick = useCallback(
     (arr) => {
       setDisplay(true);
       setStpFn(props.tableData[parseInt(arr.key)]);
       setDefaultKey(arr.key.toString());
+      window.localStorage.setItem("selectedStepFunction", arr.key);
       return;
     },
     [props]
   );
 
   useEffect(() => {
-    for (var e in props.tableData) {
-      if (props.tableData[e].loggingConfiguration.level !== "OFF") {
-        menuClick({ key: e });
-        break;
+    const selectedStepFunctionLocal = window.localStorage.getItem(
+      "selectedStepFunction"
+    );
+    if (selectedStepFunctionLocal === null) {
+      for (var e in props.tableData) {
+        if (props.tableData[e].loggingConfiguration.level !== "OFF") {
+          menuClick({ key: e });
+          window.localStorage.setItem("selectedStepFunction", e);
+          break;
+        }
       }
+    } else {
+      if (props.tableData.length >= parseInt(selectedStepFunctionLocal)) {
+        menuClick({ key: selectedStepFunctionLocal });
+      } else menuClick({ key: 0 });
     }
   }, [props.tableData, menuClick]);
 
@@ -36,7 +47,10 @@ const ListStepFunctions = (props) => {
         }}
         selectable={true}
         mode="inline"
-        onClick={menuClick}
+        onClick={(data) => {
+          menuClick(data);
+          window.location.reload();
+        }}
         selectedKeys={defaultKey}
       >
         {data.map((e, ind) => {

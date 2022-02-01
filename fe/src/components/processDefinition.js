@@ -109,8 +109,6 @@ const processDefinition = (definition) => {
     addBox("999", "End", "#B8B8B8");
     addBoxLink("Start", definition.StartAt, true, "black");
   }
-
-  console.log("processDefinition", finalJson, definition, boxIds);
   return finalJson;
 };
 export { processDefinition };

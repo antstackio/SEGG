@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import ReactFlow, { isNode, Background } from "react-flow-renderer";
 import dagre from "dagre";
 
@@ -11,7 +11,6 @@ const nodeWidth = 150;
 const nodeHeight = 27;
 
 const getLayoutedElements = (elements, direction = "TB") => {
-  console.log(elements, "elements");
   const isHorizontal = direction === "LR";
   dagreGraph.setGraph({ rankdir: direction });
 

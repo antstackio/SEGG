@@ -15,7 +15,11 @@ const Layout = () => {
     <div>
       <PageHeader
         className="site-page-header"
-        onBack={() => navigate("/")}
+        onBack={() => {
+          navigate("/");
+          window.localStorage.removeItem("stepFunctionData");
+          window.localStorage.removeItem("selectedStepFunction");
+        }}
         title={
           <video height="64" autoPlay muted>
             <source src={SEGG} type="video/mp4" />

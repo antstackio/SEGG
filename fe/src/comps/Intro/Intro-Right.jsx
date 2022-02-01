@@ -22,14 +22,10 @@ const IntroRight = () => {
     }
   };
 
-  // const awsInfo = {
-  //   accountId: "960351580303",
-  //   region: "ap-south-1",
-  //   roleName: "antstack_stepfunction_readonly",
-  // };
-
   const formUpdate = (values) => {
     setCookie("awsInfo", values, { path: "/" });
+    window.localStorage.removeItem("stepFunctionData");
+    window.localStorage.removeItem("selectedStepFunction");
     navigate("/stepfunctions");
   };
 

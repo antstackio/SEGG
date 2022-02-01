@@ -17,12 +17,23 @@ async function getStepFunctionData(awsInfo) {
 const ListStepFunctionComp = (props) => {
   const [tableData, setTableData] = useState([]);
   const [spin, setSpin] = useState(true);
+  // const [cookies2, setCookie2] = useCookies(["stepFunctionData"]);
 
   useEffect(() => {
-    getStepFunctionData(props.awsInfo).then((data) => {
-      setTableData(data);
+    const stepFunctionDataLocal =
+      window.localStorage.getItem("stepFunctionData");
+
+    console.log(stepFunctionDataLocal);
+    if (stepFunctionDataLocal === null) {
+      getStepFunctionData(props.awsInfo).then((data) => {
+        setTableData(data);
+        setSpin(false);
+        window.localStorage.setItem("stepFunctionData", JSON.stringify(data));
+      });
+    } else {
+      setTableData(JSON.parse(stepFunctionDataLocal));
       setSpin(false);
-    });
+    }
   }, [props]);
 
   return (
