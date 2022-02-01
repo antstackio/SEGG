@@ -20,8 +20,12 @@ const ProcessStepFunction = (props) => {
 
   const display = (ds) => {
     const success = (
+      //total span is 20
       <Row style={{ padding: "24px" }}>
-        <Col style={{ width: "35%", paddingRight: "12px" }}>
+        <Col
+          span={8}
+          // style={{ width: "35%", paddingRight: "12px" }}
+        >
           <ExecutionsTable
             logs={logs}
             setCurrentGraph={setCurrentGraph}
@@ -29,8 +33,9 @@ const ProcessStepFunction = (props) => {
           />
         </Col>
         <Col
+          span={16}
           style={{
-            width: "65%",
+            // width: "65%",
             paddingLeft: "24px",
           }}
         >

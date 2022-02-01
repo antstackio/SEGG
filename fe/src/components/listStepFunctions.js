@@ -69,20 +69,29 @@ const ListStepFunctions = (props) => {
 
   return (
     <Row>
-      <Col style={{ width: "256px" }}>{createMenu(props.tableData)}</Col>
+      <Col
+        span={4}
+        // push={6}
+        // style={{ width: "256px" }}
+      >
+        {createMenu(props.tableData)}
+      </Col>
       {display === false ? (
-        <div
+        <Col
+          span={20}
           style={{
             display: "flex",
             justifyContent: "center",
             marginTop: "19%",
-            width: "80vw",
           }}
         >
           Click on the Step Function Name on the left to load the executions
-        </div>
+        </Col>
       ) : (
-        <Col style={{ width: "calc(100vw - 256px)" }}>
+        <Col
+          span={20}
+          // style={{ width: "calc(100vw - 256px)" }}
+        >
           <ProcessStepFunction awsInfo={props.awsInfo} data={stpFn} />
         </Col>
       )}

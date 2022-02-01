@@ -49,7 +49,7 @@ const ExecutionsGraph = (props) => {
   getLayoutedElements(props.jsonGraphData);
 
   return (
-    <ReactFlow elements={props.jsonGraphData} defaultZoom={0.6}>
+    <ReactFlow elements={props.jsonGraphData} defaultZoom={1}>
       <Background variant="dots" gap={25} size={1} />
     </ReactFlow>
   );
