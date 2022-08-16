@@ -68,11 +68,18 @@ const ProcessStepFunction = (props) => {
       </div>
     );
 
+    const error = (
+      <div style={centerSelf}>
+        <h4> The step function failed to load </h4>
+      </div>
+    );
+
     const op = {
       success: success,
       logOff: logOff,
       log0: log0,
       loader: loader,
+      error: error,
     };
 
     return op[ds];
@@ -101,9 +108,14 @@ const ProcessStepFunction = (props) => {
           const processedDefinition = processDefinition(
             JSON.parse(props.data.definition)
           );
-          setCurrentGraph(processedDefinition);
-          setBaseGraph(processedDefinition);
-          setDisplayState("success");
+          if (processDefinition === "ERROR") 
+            setDisplayState("error");
+          else{
+            setCurrentGraph(processedDefinition);
+            setBaseGraph(processedDefinition);
+            setDisplayState("success");
+          }
+          
         }
       });
     }

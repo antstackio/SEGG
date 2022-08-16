@@ -1,10 +1,6 @@
 import { Table, Space, Button } from "antd";
 
 const processExecutionLogs = (logData, setCurrentGraph, baseGraph) => {
-  console.log(logData);
-  logData.logs.forEach((e) => {
-    console.log(JSON.parse(e.message));
-  });
   // reset graph to default colors
   setCurrentGraph(
     baseGraph.map((e) => {

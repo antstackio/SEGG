@@ -22,8 +22,6 @@ const ListStepFunctionComp = (props) => {
   useEffect(() => {
     const stepFunctionDataLocal =
       window.localStorage.getItem("stepFunctionData");
-
-    console.log(stepFunctionDataLocal);
     if (stepFunctionDataLocal === null) {
       getStepFunctionData(props.awsInfo).then((data) => {
         setTableData(data);

@@ -4,7 +4,7 @@ const sts = new AWS.STS();
 
 exports.lambdaHandler = async (event) => {
   console.log(JSON.stringify(event));
-
+  
   // assume role from client account
   const assumeRole = await sts
     .assumeRole({
@@ -12,14 +12,14 @@ exports.lambdaHandler = async (event) => {
       RoleSessionName: Math.round(Math.random() * 1000000000).toString(),
     })
     .promise();
-
+    
   // get temp credentials to target account
-  const tempCred = {
-    accessKeyId: assumeRole.Credentials.AccessKeyId,
-    secretAccessKey: assumeRole.Credentials.SecretAccessKey,
-    sessionToken: assumeRole.Credentials.SessionToken,
-    region: event.queryStringParameters.region,
-  };
+  const tempCred={
+    accessKeyId : assumeRole.Credentials.AccessKeyId,
+    secretAccessKey:assumeRole.Credentials.SecretAccessKey,
+    sessionToken:assumeRole.Credentials.SessionToken,
+    region:event.queryStringParameters.region
+  }
 
   // create new connectors for step function and cloudwatch operations
   const cloudwatchlogs = new AWS.CloudWatchLogs(tempCred);
@@ -42,10 +42,10 @@ exports.lambdaHandler = async (event) => {
       statusCode: 200,
       body: JSON.stringify(await Promise.all(describeStateMachines)),
       headers: {
-        "Access-Control-Allow-Headers": "Content-Type",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
-      },
+            "Access-Control-Allow-Headers" : "Content-Type",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        },
     };
   }
 
@@ -83,20 +83,20 @@ exports.lambdaHandler = async (event) => {
         statusCode: 200,
         body: JSON.stringify({ logs: logStreamInfo }),
         headers: {
-          "Access-Control-Allow-Headers": "Content-Type",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+            "Access-Control-Allow-Headers" : "Content-Type",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
         },
       };
     } catch (error) {
       // return complete log stream info and logs within that stream
       return {
-        statusCode: 400,
-        body: JSON.stringify({ type: "log", error: error }),
+        statusCode: 502,
+        body: JSON.stringify(error),
         headers: {
-          "Access-Control-Allow-Headers": "Content-Type",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+            "Access-Control-Allow-Headers" : "Content-Type",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
         },
       };
     }

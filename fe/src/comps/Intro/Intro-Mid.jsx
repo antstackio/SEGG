@@ -14,7 +14,7 @@ const stepData = {
     <Button
       target="_blank"
       rel="noreferrer"
-      href="https://console.aws.amazon.com/cloudformation/home?region=ap-south-1#/stacks/new?stackName=StpFn-GraphGen-IAMRole&templateURL=https://stp-fn-express-graph-gen.s3.ap-south-1.amazonaws.com/iam-one-click-template.yaml"
+      href="https://console.aws.amazon.com/cloudformation/home?region=ap-south-1#/stacks/new?stackName=SEGG-IAMRole&templateURL=https://oss-1click-deployments.s3.ap-south-1.amazonaws.com/iam-one-click-template.yaml"
     >
       Create IAM Role
     </Button>
