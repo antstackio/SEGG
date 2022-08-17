@@ -5,7 +5,7 @@ Resources:
   getStepFunctionData:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: /lambda/getStepFunctions
+      CodeUri: lambda/getStepFunctions
       Handler: app.lambdaHandler
       Runtime: nodejs14.x
       Policies:
