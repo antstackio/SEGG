@@ -108,14 +108,13 @@ const ProcessStepFunction = (props) => {
           const processedDefinition = processDefinition(
             JSON.parse(props.data.definition)
           );
-          if (processDefinition === "ERROR") 
-            setDisplayState("error");
-          else{
+          console.log(processedDefinition, "ADF");
+          if (processedDefinition === "ERROR") setDisplayState("error");
+          else {
             setCurrentGraph(processedDefinition);
             setBaseGraph(processedDefinition);
             setDisplayState("success");
           }
-          
         }
       });
     }

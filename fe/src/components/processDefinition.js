@@ -8,7 +8,7 @@ const processDefinition = (definition) => {
   const links = [];
   let ids = 1;
   let started;
-  let loopLimit = 0
+  let loopLimit = 0;
 
   try {
     // Add Boxes
@@ -41,12 +41,10 @@ const processDefinition = (definition) => {
 
     // loop function to iterate the definition
     const loopTheData = (data, dataKey, parallelStateEnd) => {
-      
       // avoid recursive loop
-      loopLimit++
-      if (loopLimit === 20)
-        throw "loop limit exceeded"
-      
+      loopLimit++;
+      if (loopLimit === 20) throw new Error({ message: "loop limit exceeded" });
+
       // add step, condition to skip addition of step
       if (!boxIds[dataKey]) {
         addBox(ids.toString(), dataKey);
@@ -118,10 +116,8 @@ const processDefinition = (definition) => {
       addBoxLink("Start", definition.StartAt, true, "black");
     }
     return finalJson;
-    
   } catch (error) {
-    return "ERROR"
+    return "ERROR";
   }
-  
 };
 export { processDefinition };

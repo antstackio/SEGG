@@ -10,14 +10,14 @@ const formStyle = {};
 const IntroRight = () => {
   const [cookies, setCookie] = useCookies(["awsInfo"]);
   const navigate = useNavigate();
-  const [width, setWidth] = useState("100px");
+  const [width, setWidth] = useState("120px");
 
   const changeWidth = () => {
-    if (width === "100px") {
+    if (width === "120px") {
       setWidth("75%");
     } else {
       setTimeout(() => {
-        setWidth("100px");
+        setWidth("120px");
       }, 200);
     }
   };
@@ -31,7 +31,11 @@ const IntroRight = () => {
 
   return (
     <Collapse style={{ width: width }} onChange={changeWidth}>
-      <Panel showArrow={false} header="Enter AWS Account Information" key="1">
+      <Panel
+        showArrow={false}
+        header="Step 2 : Enter Linked AWS Account Information"
+        key="1"
+      >
         <Form
           key="formItem"
           layout="vertical"

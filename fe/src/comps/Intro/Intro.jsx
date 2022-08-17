@@ -22,6 +22,7 @@ const introRight = {
 const bgVideo = {
   position: "fixed",
   zIndex: "-1",
+  height: "calc((100vw/3)*2)",
 };
 
 const introRightCol = {
@@ -42,7 +43,7 @@ const Intro = () => {
       {/* intro right */}
       <Col span={16}>
         <div style={introRight}>
-          <video style={bgVideo} height="1000" autoPlay muted loop>
+          <video style={bgVideo} autoPlay muted loop>
             <source src={WavyDots1000Comp} type="video/mp4" />
           </video>
           <Row>
