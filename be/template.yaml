@@ -1,27 +1,26 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: SEGG
 Resources:
   getStepFunctionData:
-    Type: AWS::Serverless::Function 
+    Type: AWS::Serverless::Function
     Properties:
-      CodeUri: getStepFunctionData/
+      CodeUri: /lambda/getStepFunctions
       Handler: app.lambdaHandler
       Runtime: nodejs14.x
       Policies:
         - AWSLambdaExecute
-        - Version: '2012-10-17' 
+        - Version: "2012-10-17"
           Statement:
             - Effect: Allow
               Action:
                 - sts:AssumeRole
                 - states:ListStateMachines
                 - states:DescribeStateMachine
-              Resource: '*'
+              Resource: "*"
       Events:
         HelloWorld:
-          Type: Api 
+          Type: Api
           Properties:
-            Path: /lambda/getStepFunctions
+            Path: /getStepFunctionData
             Method: get
-
