@@ -1,4 +1,5 @@
-import { Steps, Collapse, Button, Form, Input } from "antd";
+import { Steps, Collapse, Button, Form, Input, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import airtable from "../../components/airtable";
 import Schema from "async-validator";
@@ -6,6 +7,21 @@ Schema.warning = function () {}; // to avoid async validator warning
 
 const { Step } = Steps;
 const { Panel } = Collapse;
+
+async function emailValidationAPI(data) {
+  try {
+    const response = await fetch(
+      `https://api.quickemailverification.com/v1/verify?email=${data.Email}&apikey=23d78e221b6a02915f263674a89d7cfeeb4084621225b7a8b9b0ec050204`
+    );
+    const responseJson = await response.json();
+    console.log(responseJson);
+    return responseJson;
+  } catch (error) {
+    return {
+      safe_to_send: "false",
+    };
+  }
+}
 
 const IAMData = {
   "IAM Role - Assume Role Policy":
@@ -48,11 +64,25 @@ const stepData = {
     </>
   ),
 };
+const failedEmailValidation = (
+  <>
+    <br />
+    <br />
+    <span> Please Enter A Valid Email Id !</span>
+  </>
+);
+const registrationButton = (
+  <Button type="primary" htmlType="submit">
+    Register
+  </Button>
+);
 
 const IntroMid = () => {
   const [width, setWidth] = useState("120px");
   const [panel, setPanel] = useState("registerPart1");
   const [activeKey, setActiveKey] = useState("");
+  const [registerButton, setRegisterButton] = useState(registrationButton);
+  const [emailValidationMessage, setEmailValidationMessage] = useState("");
 
   const changeWidth = () => {
     if (width === "120px") {
@@ -65,13 +95,26 @@ const IntroMid = () => {
       }, 200);
     }
   };
-  const formStyle = {};
 
   const formUpdate = (values) => {
-    console.log(values);
-    airtable(values);
-    setPanel("registerPart2");
-    setActiveKey("2");
+    setRegisterButton(<Spin indicator={<LoadingOutlined />} />);
+    setEmailValidationMessage(<></>);
+    try {
+      emailValidationAPI(values).then((data) => {
+        if (data.safe_to_send === "true") {
+          airtable(values);
+          setPanel("registerPart2");
+          setActiveKey("2");
+          setRegisterButton(registrationButton);
+        } else {
+          setEmailValidationMessage(failedEmailValidation);
+          setRegisterButton(registrationButton);
+        }
+      });
+    } catch (error) {
+      setEmailValidationMessage(failedEmailValidation);
+      setRegisterButton(registrationButton);
+    }
   };
 
   const panelJSX = {
@@ -91,7 +134,6 @@ const IntroMid = () => {
           <Form.Item
             label="Name"
             name="Name"
-            style={formStyle}
             rules={[
               {
                 required: true,
@@ -103,7 +145,6 @@ const IntroMid = () => {
           </Form.Item>
           <Form.Item
             label="Email"
-            style={formStyle}
             name="Email"
             rules={[
               {
@@ -120,7 +161,6 @@ const IntroMid = () => {
           </Form.Item>
           <Form.Item
             label="Organisation"
-            style={formStyle}
             name="Organisation"
             rules={[
               {
@@ -133,7 +173,6 @@ const IntroMid = () => {
           </Form.Item>
           <Form.Item
             label="Designation"
-            style={formStyle}
             name="Designation"
             rules={[
               {
@@ -145,10 +184,9 @@ const IntroMid = () => {
             <Input />
           </Form.Item>
 
-          <Form.Item style={formStyle}>
-            <Button type="primary" htmlType="submit">
-              Register
-            </Button>
+          <Form.Item>
+            {registerButton}
+            {emailValidationMessage}
           </Form.Item>
         </Form>
       </Panel>
