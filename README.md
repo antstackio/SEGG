@@ -10,7 +10,7 @@ Click here [SEGG](https://segg.antstack.com/) to navigate to the SEGG Web Portal
 
 ### Step 1: Register and Link AWS Account
 
-Register by filling the basic information. On successful registration you will be pointed towards the '1 Click Deploy' that will create an IAM Role in your account for SEGG to access to Step Function Definition and Cloudwatch Logs
+Register by filling the basic information. On successful registration you will be pointed towards the '1 Click Deploy' that will create an IAM Role in your account for SEGG to access to Step Function Definition and Cloudwatch Logs. You can view the Cloudformation and the role it creates over [here](https://github.com/antstackio/SEGG/blob/main/be/iam-one-click-template.yaml)
 ​
 
 - #### Security Note
@@ -27,7 +27,7 @@ Enter the information given below in Step 2 of SEGG portal to access the demo ap
 |Key| Value |  
 |--|--|  
 |AWS Account Id|960351580303|
-|Region|960351580303|
+|Region|ap-south-1|
 |IAM Role Name|antstack_stepfunction_readonly|
 ​
 
