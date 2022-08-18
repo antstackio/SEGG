@@ -36,7 +36,7 @@ Enter the information given below in Step 2 of SEGG portal to access the demo ap
 | Name                | Function                                                                                                       |
 | ------------------- | -------------------------------------------------------------------------------------------------------------- |
 | airtable            | Used for storing registered users.                                                                             |
-| antd                | Component Library                                                                                              |
+| antd                | Component library.                                                                                             |
 | react-flow-renderer | Used to generate graphs.                                                                                       |
 | dagre               | Used for generating the co ordinates for graph.                                                                |
 | react               | Help build user interfaces.                                                                                    |
