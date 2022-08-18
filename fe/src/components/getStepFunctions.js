@@ -4,14 +4,18 @@ import { Col } from "antd";
 import { Loading3QuartersOutlined } from "@ant-design/icons";
 
 async function getStepFunctionData(awsInfo) {
-  const response = await fetch(
-    `https://rvs2lmfae1.execute-api.ap-south-1.amazonaws.com/Prod/getStepFunctionData?type=all&region=${awsInfo.region}&accountId=${awsInfo.accountId}&roleName=${awsInfo.roleName}`
-  );
-  const responseJson = await response.json();
-  responseJson.forEach((element) => {
-    element.key = element.creationDate;
-  });
-  return responseJson;
+  try {
+    const response = await fetch(
+      `https://rvs2lmfae1.execute-api.ap-south-1.amazonaws.com/Prod/getStepFunctionData?type=all&region=${awsInfo.region}&accountId=${awsInfo.accountId}&roleName=${awsInfo.roleName}`
+    );
+    const responseJson = await response.json();
+    responseJson.forEach((element) => {
+      element.key = element.creationDate;
+    });
+    return responseJson;
+  } catch (error) {
+    return [];
+  }
 }
 
 const ListStepFunctionComp = (props) => {

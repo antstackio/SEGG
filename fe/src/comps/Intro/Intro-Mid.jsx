@@ -11,7 +11,7 @@ const { Panel } = Collapse;
 async function emailValidationAPI(data) {
   try {
     const response = await fetch(
-      `https://api.quickemailverification.com/v1/verify?email=${data.Email}&apikey=23d78e221b6a02915f263674a89d7cfeeb4084621225b7a8b9b0ec050204`
+      `https://rvs2lmfae1.execute-api.ap-south-1.amazonaws.com/Prod/emailVerification?email=${data.Email}`
     );
     const responseJson = await response.json();
     console.log(responseJson);
