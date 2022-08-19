@@ -1,6 +1,6 @@
 # SEGG - Step Function Express Graph Generator
 
-SEGG gives visibility to express each execution of a AWS Step Function Express Workflows making it much easier to build and troubleshoot. This tool will help you see the execution visually similar to the execution graph of a Step Function Standard Worflow provided by AWS, and build applications at a much faster rate.
+SEGG gives visibility to express each execution of a AWS Step Function Express Workflows making it much easier to build and troubleshoot. This tool will help you see the execution visually similar to the execution graph of a Step Function Standard Worflow provided by AWS, and build applications at a much faster rate. Checkout quick video demo on [YouTube](https://www.youtube.com/watch?v=u_mXh03CIIU)
 ​
 
 ## Getting Started
