@@ -29,7 +29,6 @@ Enter the information given below in Step 2 of SEGG portal to access the demo ap
 |AWS Account Id|960351580303|
 |Region|ap-south-1|
 |IAM Role Name|antstack_stepfunction_readonly|
-​
 
 ## Libraries
 
